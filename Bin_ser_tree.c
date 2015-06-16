@@ -12,9 +12,9 @@ void Insertbst1(BSTNode **root,int key);
 BSTNode * Insertbst2(BSTNode *root,int key);
 void BstInorder(BSTNode *);
 Keytype * find(BSTNode * BST,Keytype key);
-
+void Delete(BSTNode **BST,Keytype key);
 int main(){
-	  int i,in,keyfind;
+	  int i,in,keyfind,keydelete;
 	  int *p;
 	  printf("please enter the root's key:\n");
 	  scanf("%d",&in);
@@ -28,10 +28,16 @@ int main(){
 	  printf("the in order result is :\n");
 	  BstInorder(root);
 	  printf("\n");
-	  printf("please enter the value you want to be found\n");
+	  printf("please enter the value you want to find\n");
 	  scanf("%d",&keyfind);
 	  p = find(root,keyfind);
 	  printf("the key's address is:%p,and the value is:%d\n",p,*p);
+	  printf("please enter the value you want to delete\n");
+	  scanf("%d",&keydelete);
+	  Delete(&root,keydelete);
+	  printf("the in order result is :\n");
+	  BstInorder(root);
+	  printf("\n");
     return 0;	
 }
 BSTNode * Creatbstnode(const int key){
@@ -60,7 +66,7 @@ BSTNode * Insertbst2(BSTNode *root,int key){
     {    
     	root = node;
     }//root node is NULL
-   else if(root->key>key)
+    else if(root->key>key)
     {
         root->left = Insertbst2(root->left,key);	  
     }
@@ -88,6 +94,41 @@ Keytype * find(BSTNode * BST,Keytype key){
     	  else if(BST->key > key)
     	  	  find(BST->left,key);
     	  else
-    	  	  find(BST->left,key);
+    	  	  find(BST->right,key);
     	  }    	
+}
+void Delete(BSTNode **BST,Keytype key){
+	  BSTNode * temp = *BST;
+    if(*BST == NULL){
+    	  }
+    else if((*BST)->key > key)
+    	  Delete(&(*BST)->left,key);
+    else if((*BST)->key < key)
+    	  Delete(&(*BST)->right,key);
+    	  
+    else{
+    	 if((*BST)->left==NULL){
+    	     *BST = (*BST)->right;
+    	     free(temp);
+    	 }
+       else if((*BST)->right==NULL){
+    	     *BST = (*BST)->left;
+    	     free(temp);
+    	 }
+       else{ 
+       	   if(((*BST)->left->right == NULL)){
+               (*BST)->key = (*BST)->left->key;
+               Delete(&(*BST)->left,(*BST)->key); 
+           }
+           else{
+               BSTNode *p1 = *BST,*p2 = (*BST)->left;
+               while(p2->right){
+               	  p1 = p2;
+               	  p2 = p2->right;
+               }
+               (*BST)->key = p2->key;
+               Delete(&p1->right,p2->key);
+           }	
+       }
+    }
 }
