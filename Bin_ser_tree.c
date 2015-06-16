@@ -1,8 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
+typedef int Keytype;
 typedef struct Node{
-    int key;
+    Keytype key;
     struct Node *left;
     struct Node *right;	
 } BSTNode;
@@ -10,10 +11,11 @@ BSTNode * Creatbstnode(int);
 void Insertbst1(BSTNode **root,int key);
 BSTNode * Insertbst2(BSTNode *root,int key);
 void BstInorder(BSTNode *);
-
+Keytype * find(BSTNode * BST,Keytype key);
 
 int main(){
-	  int i,in;
+	  int i,in,keyfind;
+	  int *p;
 	  printf("please enter the root's key:\n");
 	  scanf("%d",&in);
 	  BSTNode *root = Creatbstnode(in);//creat root node
@@ -26,6 +28,10 @@ int main(){
 	  printf("the in order result is :\n");
 	  BstInorder(root);
 	  printf("\n");
+	  printf("please enter the value you want to be found\n");
+	  scanf("%d",&keyfind);
+	  p = find(root,keyfind);
+	  printf("the key's address is:%p,and the value is:%d\n",p,*p);
     return 0;	
 }
 BSTNode * Creatbstnode(const int key){
@@ -71,4 +77,17 @@ void BstInorder(BSTNode * BST){
         printf("%4d",BST->key);
         BstInorder(BST->right);
     }    		
+}
+Keytype * find(BSTNode * BST,Keytype key){
+    if(BST == NULL){
+    	  return NULL;
+    	  }
+    else{
+    	  if(BST->key == key)
+    	  	  return &BST->key;
+    	  else if(BST->key > key)
+    	  	  find(BST->left,key);
+    	  else
+    	  	  find(BST->left,key);
+    	  }    	
 }
