@@ -51,6 +51,7 @@ ListType * Inserttail(ListType *header,Keytype key){
 }
 void PrintList(ListType *header){
     ListType *p = header->next;
+    printf("the list's keys are: \n");
     while(p){
     	  printf("%4d",p->key);
         p = p->next;
