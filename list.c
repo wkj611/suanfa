@@ -11,6 +11,7 @@ typedef struct listnode{
 } ListType;
 ListType * Initlist();
 ListType * Inserttail(ListType *header,Keytype key);
+ListType * Insertheader(ListType *header,Keytype key);
 void PrintList(ListType *header);
 int main(){
 	  ListType *header;
@@ -20,7 +21,7 @@ int main(){
 	  for(i=0;i<6;i++){
 	  	  printf("enter the key\n");
 	  	  scanf("%d",&in);
-	      Inserttail(header,in);
+	      Insertheader(header,in);
 	  }
 	  PrintList(header);
 	  
@@ -48,6 +49,18 @@ ListType * Inserttail(ListType *header,Keytype key){
 	      p->next = Creatnode(key);
 	  }
 	  return header;
+}
+ListType * Insertheader(ListType *header,Keytype key){
+    ListType * p;
+    if(header==NULL){
+        header = Initlist();
+    }
+    else{
+    	  p = Creatnode(key);
+        p->next = header->next;
+        header->next = p;
+    }
+    return header;
 }
 void PrintList(ListType *header){
     ListType *p = header->next;
