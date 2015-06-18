@@ -13,16 +13,28 @@ ListType * Initlist();
 ListType * Inserttail(ListType *header,Keytype key);
 ListType * Insertheader(ListType *header,Keytype key);
 void PrintList(ListType *header);
+KetType *find(ListType *header,Keytype key){
+    ListType * p = header;
+    Keytype *pkey;
+    while(p->next){
+        if(p->key == key){
+            pkey = &p->key;
+            break;
+        }
+    }
+    return pkey;
+}
 int main(){
 	  ListType *header;
 	  int i;
-	  Keytype in;
+	  Keytype in,keyfind;
 	  header = Initlist();
 	  for(i=0;i<6;i++){
 	  	  printf("enter the key\n");
 	  	  scanf("%d",&in);
 	      Insertheader(header,in);
 	  }
+	  
 	  PrintList(header);
 	  
 }
