@@ -60,15 +60,14 @@ void Insertbst1(BSTNode **root,int key){
     	  Insertbst1(&((*root)->right),key);
     
 }
-BSTNode * Insertbst2(BSTNode *root,int key){
-    BSTNode *node = Creatbstnode(key);
+BSTnode *Insertbst2(BSTNode *root,int key){
     if(root == NULL)
     {    
-    	root = node;
+    	root = Creatbstnode(key);
     }//root node is NULL
     else if(root->key>key)
     {
-        root->left = Insertbst2(root->left,key);	  
+ 			root->left = Insertbst2(root->left,key);	//必须赋值的原因是root->left 是值传递，并没有修改root->left   
     }
     else
     {
