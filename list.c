@@ -13,17 +13,9 @@ ListType * Initlist();
 ListType * Inserttail(ListType *header,Keytype key);
 ListType * Insertheader(ListType *header,Keytype key);
 void PrintList(ListType *header);
-KetType *find(ListType *header,Keytype key){
-    ListType * p = header;
-    Keytype *pkey;
-    while(p->next){
-        if(p->key == key){
-            pkey = &p->key;
-            break;
-        }
-    }
-    return pkey;
-}
+int ListLength(ListType *header);
+Keytype *find(ListType *header,Keytype key);
+
 int main(){
 	  ListType *header;
 	  int i;
@@ -34,8 +26,14 @@ int main(){
 	  	  scanf("%d",&in);
 	      Insertheader(header,in);
 	  }
-	  
+	  printf("please enter the key you want to find\n");
+	  scanf("%d",&keyfind);
+	  if(find(header,keyfind))
+	      printf("the key's addr is : %p and the key is:%d\n",find(header,keyfind),*find(header,keyfind));
+	  else
+	  	  printf("the key is not in the list\n");
 	  PrintList(header);
+	  printf("the list's length is :%d\n",ListLength(header));
 	  
 }
 ListType * Initlist(){
@@ -82,4 +80,30 @@ void PrintList(ListType *header){
         p = p->next;
     }
     printf("\n");
+}
+Keytype *find(ListType *header,Keytype key){
+    ListType * p = header->next;
+    Keytype *pkey;
+    while(p){
+        if(p->key == key){
+            pkey = &p->key;
+            break;
+        }
+        else 
+        	  p = p->next;
+    }
+    if(!p) 
+    	  return NULL;
+    else
+        return pkey;
+}
+int ListLength(ListType * header){
+    ListType *p = header;
+    int count = 1;
+    if(p==NULL)
+        return 0;
+    else
+    	  while((p = p->next))
+    	      count++;
+    return count;
 }
