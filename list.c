@@ -15,11 +15,11 @@ ListType * Insertheader(ListType *header,Keytype key);
 void PrintList(ListType *header);
 int ListLength(ListType *header);
 Keytype *find(ListType *header,Keytype key);
-
+void Delete(ListType *header,Keytype key);
 int main(){
 	  ListType *header;
 	  int i;
-	  Keytype in,keyfind;
+	  Keytype in,keyfind,keydelete;
 	  header = Initlist();
 	  for(i=0;i<6;i++){
 	  	  printf("enter the key\n");
@@ -34,6 +34,10 @@ int main(){
 	  	  printf("the key is not in the list\n");
 	  PrintList(header);
 	  printf("the list's length is :%d\n",ListLength(header));
+	  printf("the key you want to delete:\n");
+	  scanf("%d",&keydelete);
+	  Delete(header,keydelete);
+	  PrintList(header);
 	  
 }
 ListType * Initlist(){
@@ -106,4 +110,20 @@ int ListLength(ListType * header){
     	  while((p = p->next))
     	      count++;
     return count;
+}
+void Delete(ListType *header,Keytype key){
+    ListType * p,*q;
+    p = header;
+    q = p->next;
+    while(q){
+        if(q->key == key){
+        	  p->next = q->next;
+        	  free(q);
+        	  break;
+        }
+        else{
+        	  p = p->next;
+        	  q = q->next;
+        }  
+    }
 }
